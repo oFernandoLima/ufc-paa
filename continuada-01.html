@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Atividade Continuada 01</title>
+
+    <!-- MATHJAX 3 (através da CDN) -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+
+    <!-- MATHJAX 3 (salvo no computador) -->
+    <!-- <script type="text/javascript" async src="../../../Aplicativos/MathJax-master/es5/tex-mml-chtml.js" async></script> -->
+
+    <!-- \cancel -->
+
+    <style>
+      .answer {
+        background-color: #f0f0f0;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header style="display: flex; flex-direction: column; align-items: center;">
+      <h1>Resolução da atividade continuada 01</h1>
+      <h2>Luis Fernando Batista Lima - 538134 - Engenharia de software</h2>
+    </header>
+
+    <ol>
+      <li id="yui_3_17_2_1_1678840447697_65">
+        <span style="font-size: medium"
+          >Projete um algoritmo para calcular \(\lfloor \sqrt{n} \rfloor\)
+          utilizando apenas comandos de seleção, repetição e atribuição, e as
+          quatro operações aritméticas básicas. 
+        </span>
+        <span style="font-size: medium"
+          >Obs.: Como apenas a parte inteira do valor raiz quadrada é
+          solicitado, use um algoritmo iterativo simples que testa todos os
+          valores inteiros dentro de uma faixa de valores possíveis.
+        </span>
+
+        <div class="answer">
+          <pre><code>
+        procuraRaiz(n)
+          resultado = 0
+          contador = 0
+          
+          enquanto (contador * contador) ≤ n faça
+            resultado = contador
+            contador = contador + 1
+          
+          retorne resultado
+          </code></pre>
+        </div>
+      </li>
+      <li>
+        <p>
+          <span style="font-size: medium"
+            >Considere a ordenação de \(n\) números armazenados no vetor \(A =
+            \langle a_1, a_2, \ldots, a_n \rangle\), localizando primeiro o
+            menor elemento de \(A\) e permutando esse elemento com o elemento
+            contido em \(A[1]\). Em seguida, determine o segundo menor elemento 
+          </span>
+          <span style="font-size: medium"
+            >de \(A\) e permute-o com \(A[2]\). Continue dessa maneira para os
+            primeiros \(n-1\) elementos de \(A\). Escreva o pseudocódigo para
+            esse algoritmo, conhecido como
+            <strong>ordenação por seleção</strong>. Forneça os tempos
+            de execução \(T(n)\) do melhor caso e do pior caso da ordenação
+            por seleção. O cálculo de \(T(n)\) deve ser feito de modo formal,
+            como foi realizado em sala para a ordenação por inserção.
+          </span>
+        </p>
+        <div class="answer">
+          <pre><code>
+        selectionSort(A, n)
+          para indice = 0 até n-1 faça
+              indiceMenor = indice;
+              para indiceSeguinte = indice + 1 até n faça
+                se A[indiceSeguinte] < A[indiceMenor] então
+                  indiceMenor = indiceSeguinte;
+
+              aux = A[indice];
+              A[indice] = A[indiceMenor];
+              A[indiceMenor] = aux;
+          </code></pre>
+          <p>
+            O melhor caso ocorre quando o vetor já está ordenado, ou seja, não é necessário realizar nenhuma troca. Nesse caso, o tempo de execução é \(T(n) = n-1\).
+          </p>
+          <p>
+            O pior caso ocorre quando o vetor está ordenado de forma decrescente, ou seja, é necessário realizar \(n-1\) trocas. Nesse caso, o tempo de execução é \(T(n) = \dfrac{n^2-n}{2}\).
+          </p>
+        </div>
+      </li>
+      <li>
+        <p>
+          <span style="font-size: medium">Prove as seguintes afirmações:</span>
+        </p>
+        <ul>
+          <li>
+            \( (n+1)^2 = O(n^2) \)
+
+            <div class="answer">
+              <p>
+                A notação \(O(n)\) nos diz que existem constantes positivas \(c\)
+                e \(n_0\) de modo que <br />
+                <center>
+                  \(0 \le f(n) \le c * g(n) \text{ para todo } n \ge n_0\)
+                </center>
+              </p>
+              <p>
+                Ademais, a partir da notação O, temos que <br />
+                <center>
+                  \(f(n)=(n+1)^2\) <br />
+                  \(g(n) = n^2\)
+                </center>
+              </p>
+              <p>
+                Sendo assim, devemos provar que
+                <center>\((n+1)^2 \le c * n^2\)</center>
+              </p>
+              <p>
+                Pela propriedade dos produtos notáveis, podemos obter
+                <center>\((n+1)^2 = n^2 + 2n + 1\)</center>
+              </p>
+              <p>
+                Note que
+                <center>
+                  \(2n \le 2n^2 \text{ para todo } n \ge 0\) <br />
+                  \(1 \le n^2 \text{ para todo } n \ge 1\)
+                </center>
+              </p>
+              <p>
+                Logo
+                <center>
+                  \(n^2 + 2n + 1 \le n^2 + 2n^2 + n^2 = 4n^2 \text{ para todo } n
+                  \ge 1\) <br />
+                </center>
+              </p>
+              <p>
+                Portanto,
+                <center>
+                  \(f(n) \le c * g(n) \text{ para } c=4 \text{ e } n \ge n_0 = 1\)
+                </center>
+              </p>
+            </div>
+          </li>
+          <li>
+            \( n^2-3n-18 = \Omega(n^2) \)
+
+            <div class="answer">
+              <p>
+                A notação \(\Omega(n)\) nos diz que existem constantes positivas
+                \(c\) e \(n_0\) de modo que <br />
+                <center>
+                  \(0 \le c * g(n) \le f(n) \text{ para todo } n \ge n_0\)
+                </center>
+              </p>
+              <p>
+                Ademais, a partir da notação \(\Omega\), temos que <br />
+                <center>
+                  \(f(n)=n^2 -3n -18\) <br />
+                  \(g(n) = n^2\)
+                </center>
+              </p>
+              <p>
+                Sendo assim, devemos provar que
+                <center>\(n^2 -3n -18 \ge c * n^2\)</center>
+              </p>
+              <p>
+                Na sequência, podemos dividir toda a inequação por \(n^2\), a fim
+                de de isolar a constante \(c\), obtendo
+                <center>
+                  \begin{equation}
+                      \dfrac{n^2}{n^2} - \dfrac{3n}{n^2} -
+                      \dfrac{18}{n^2} \ge \dfrac{c * n^2}{n^2}
+                  \end{equation} <br />
+                  \begin{equation}
+                      \dfrac{\cancel{n^2}}{\cancel{n^2}} - \dfrac{3 *
+                      \cancel{n}}{n*\cancel{n}} - \dfrac{18}{n^2} \ge \dfrac{c *
+                      \cancel{n^2}}{\cancel{n^2}}
+                  \end{equation} <br />
+                  \begin{equation}
+                      1 - \dfrac{3}{n} - \dfrac{18}{n^2} \ge c
+                  \end{equation}
+                </center>
+              </p>
+              <p>
+                Supondo \(n_0 = 10\) e substituindo \(n\) por \(n_0\) na inequação,
+                podemos obter
+                <center>
+                  \begin{equation} 1 - \dfrac{3}{10} - \dfrac{18}{10^2} \ge c \end{equation} <br />
+                  \begin{equation} 1 - 0,3 - \dfrac{18}{100} \ge c \end{equation} <br />
+                  \begin{equation} 1 - 0,3 - 0,18 \ge c \end{equation} <br />
+                  \begin{equation} 1 - 0,48 \ge c \end{equation} <br />
+                  \begin{equation} 0,52 \ge c \end{equation} <br />
+                </center>
+              </p>
+              <p>
+                Portanto,
+                <center>
+                  \(f(n) \ge c * g(n) \text{ para } c=0,52 \text{ e } n \ge n_0 =
+                  10\)
+                </center>
+              </p>
+            </div>
+          </li>
+          <li>
+            \( n^3-3n^2-n = \Omega(n^3) \)
+
+            <div class="answer">
+              <p>
+                A notação \(\Omega(n)\) nos diz que existem constantes positivas
+                \(c\) e \(n_0\) de modo que <br />
+                <center>
+                  \(0 \le c * g(n) \le f(n) \text{ para todo } n \ge n_0\)
+                </center>
+              </p>
+              <p>
+                Ademais, a partir da notação \(\Omega\), temos que <br />
+                <center>
+                  \(f(n)=n^3-3n^2-n\) <br />
+                  \(g(n) = n^3\)
+                </center>
+              </p>
+              <p>
+                Sendo assim, devemos provar que
+                <center>\(n^3-3n^2-n \ge c * n^3\)</center>
+              </p>
+              <p>
+                Na sequência, podemos dividir toda a inequação por \(n^3\), a fim
+                de de isolar a constante \(c\), obtendo
+                <center>
+                  \begin{equation}
+                      \dfrac{n^3}{n^3} -
+                      \dfrac{3n^2}{n^3} -
+                      \dfrac{n}{n^3} \ge
+                      \dfrac{c * n^3}{n^3}
+                  \end{equation} <br />
+                  \begin{equation}
+                      \dfrac{\cancel{n^3}}{\cancel{n^3}} -
+                      \dfrac{3 * \cancel{n^2}}{n*\cancel{n^2}} -
+                      \dfrac{\cancel{{n}}}{n^2*\cancel{n}} \ge
+                      \dfrac{c * \cancel{n^3}}{\cancel{n^3}}
+                  \end{equation} <br />
+                  \begin{equation}
+                      1 -
+                      \dfrac{3}{n} -
+                      \dfrac{1}{n^2} \ge c
+                  \end{equation}
+                </center>
+              </p>
+              <p>
+                Supondo \(n_0 = 10\) e substituindo \(n\) por \(n_0\) na inequação,
+                podemos obter
+                <center>
+                  \begin{equation} 1 - \dfrac{3}{10} - \dfrac{1}{10^2} \ge c \end{equation} <br />
+                  \begin{equation} 1 - 0,3 - \dfrac{1}{100} \ge c \end{equation} <br />
+                  \begin{equation} 1 - 0,3 - 0,01 \ge c \end{equation} <br />
+                  \begin{equation} 1 - 0,31 \ge c \end{equation} <br />
+                  \begin{equation} 0,69 \ge c \end{equation} <br />
+                </center>
+              </p>
+              <p>
+                Portanto,
+                <center>
+                  \(f(n) \ge c * g(n) \text{ para } c=0,69 \text{ e } n \ge n_0 =
+                  10\)
+                </center>
+              </p>
+            </div>
+          </li>
+          <li>
+            \(\lg(100n^3+200n+300)^2 = O(\lg n)\)
+
+            <div class="answer">
+              <p>
+                A notação \(O(n)\) nos diz que existem constantes positivas \(c\)
+                e \(n_0\) de modo que <br />
+                <center>
+                  \(0 \le f(n) \le c * g(n) \text{ para todo } n \ge n_0\)
+                </center>
+              </p>
+              <p>
+                Ademais, a partir da notação O, temos que <br />
+                <center>
+                  \(f(n)=lg(100n^3+200n+300)^2\) <br />
+                  \(g(n) = lg(n)\)
+                </center>
+              </p>
+              <p>
+                Sendo assim, devemos provar que
+                <center>\(lg(100n^3+200n+300)^2 \le c * lg(n)\)</center>
+              </p>
+              <p>
+                Pela propriedade do logaritmo de uma potência, podemos obter
+                <center>\(2 * lg(100n^3+200n+300) \le c * lg(n)\)</center>
+              </p>
+              <p>
+                Note que
+                <center>
+                  \(100n^3 \le 100n^3 \text{ para todo } n \ge 0\) <br />
+                  \(200n \le 200n^3 \text{ para todo } n \ge 0\) <br />
+                  \(300 \le 300n^3 \text{ para todo } n \ge 1\)
+                </center>
+              </p>
+              <p>
+                Logo
+                <center>
+                  \(2 * lg(100n^3+200n+300) \le 2 * lg(100n^3+200n^3+300n^3) \text{ para todo } n
+                  \ge 1\) <br />
+                </center>
+              </p>
+              <p>
+                Trabalhando com as propriedades do logaritmo de uma soma, logaritmo de um produto e logaritmo de uma potência, podemos
+                obter
+                <center>
+                  \(2 * lg(100n^3+200n^3+300n^3) = 2 * lg(600n^3) = 2 * lg(600) + 2 * lg(n^3) = 2 * lg(600) + 6 * lg(n)\)
+                </center>
+              </p>
+              <p>
+                Logo, temos que
+                <center>
+                  \(2 * lg(100n^3+200n+300) \le 2 * lg(600) + 6 * lg(n) \text{ para todo } n \ge 1\)
+                </center>
+              </p>
+              <p>
+                Supondo \(c = 8\) e \(n_0 = 1\), e substituindo \(n\) por \(n_0\) na inequação, podemos obter
+                <center>
+                  \(2 * lg(100*1^3+200*1+300) \le 2 * lg(600) + 6 * lg(1)\) <br />
+                  \(2 * lg(100+200+300) \le 2 * lg(600) + 6 * 0\) <br />
+                  \(2 * lg(600) \le 2 * lg(600)\)
+                </center>
+              </p>
+              <p>
+                Portanto,
+                <center>
+                  \(f(n) \le c * g(n) \text{ para } c=8 \text{ e } n \ge n_0 = 1\)
+                </center>
+              </p>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </body>
+</html>
